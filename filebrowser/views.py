@@ -164,6 +164,7 @@ def mkdir(request):
         msg = _('The requested Folder does not exist.')
         request.user.message_set.create(message=msg)
         return HttpResponseRedirect(reverse("fb_browse"))
+    url_path = path.replace("\\", "/")
     abs_path = os.path.join(MEDIA_ROOT, DIRECTORY, path)
     
     if request.method == 'POST':
@@ -197,6 +198,7 @@ def mkdir(request):
     return render_to_response('filebrowser/makedir.html', {
         'form': form,
         'query': query,
+        'url_path': url_path,
         'title': _(u'New Folder'),
         'settings_var': get_settings_var(),
         'breadcrumbs': get_breadcrumbs(query, path),
